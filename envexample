@@ -1,0 +1,5 @@
+#this is example of what.env should have
+MONGODB_CONNECTION_LINK=mongodb://127.0.0.1:27017/ClientSupportPlatform
+EMAIL_USER=test@gmail.com
+EMAIL_PASSWORD=emailpassword
+JWT_TOKEN_RANDOM_STRING=randomstring

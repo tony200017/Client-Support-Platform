@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const express_validation_1 = require("express-validation");
+const complaint_validation_1 = require("./complaint.validation");
+const complaint_controller_1 = require("./complaint.controller");
+const Auth_1 = __importDefault(require("../Middleware/Auth"));
+const client_1 = __importDefault(require("../Middleware/client"));
+const admin_1 = __importDefault(require("../Middleware/admin"));
+const router = (0, express_1.Router)();
+router.post('/add', Auth_1.default, client_1.default, (0, express_validation_1.validate)(complaint_validation_1.complaintValidationSchema), complaint_controller_1.complaintAdd);
+router.get('/mycomplaints', Auth_1.default, client_1.default, (0, express_validation_1.validate)(complaint_validation_1.myComplaintSchema), complaint_controller_1.myComplaints);
+router.get('/getcomplaints', Auth_1.default, admin_1.default, (0, express_validation_1.validate)(complaint_validation_1.getComplaintSchema), complaint_controller_1.getComplaints);
+router.delete('/delete/:id', Auth_1.default, client_1.default, (0, express_validation_1.validate)(complaint_validation_1.paramsIdSchema), complaint_controller_1.complaintDelete);
+router.get('/:id', Auth_1.default, client_1.default, (0, express_validation_1.validate)(complaint_validation_1.paramsIdSchema), complaint_controller_1.complaintGet);
+router.put('/:id', Auth_1.default, admin_1.default, (0, express_validation_1.validate)(complaint_validation_1.updateComplaintSchema), complaint_controller_1.complaintUpdate);
+exports.default = router;

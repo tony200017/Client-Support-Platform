@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const express_validation_1 = require("express-validation");
+const category_validation_1 = require("./category.validation");
+const category_controller_1 = require("./category.controller");
+const Auth_1 = __importDefault(require("../Middleware/Auth"));
+const admin_1 = __importDefault(require("../Middleware/admin"));
+//import isClient from '../Middleware/client';
+const router = (0, express_1.Router)();
+router.get('/', category_controller_1.allCategories);
+router.post('/add', Auth_1.default, admin_1.default, (0, express_validation_1.validate)(category_validation_1.categorySchema), category_controller_1.categoryAdd);
+router.put('/update/:id', Auth_1.default, admin_1.default, (0, express_validation_1.validate)(category_validation_1.updatecategorySchema), category_controller_1.categoryUpdate);
+router.delete('/delete/:id', Auth_1.default, admin_1.default, (0, express_validation_1.validate)(category_validation_1.paramsIdSchema), category_controller_1.categoryDelete);
+router.get('/categories', Auth_1.default, admin_1.default, (0, express_validation_1.validate)(category_validation_1.categoryPaginateSchema), category_controller_1.categories);
+router.get('/get/:id', Auth_1.default, admin_1.default, (0, express_validation_1.validate)(category_validation_1.paramsIdSchema), category_controller_1.categoryGet);
+exports.default = router;
